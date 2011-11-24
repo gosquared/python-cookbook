@@ -27,6 +27,10 @@ include Chef::Mixin::ShellOut
 # refactoring into core chef easy
 
 action :install do
+  puts "!!! vvv NEW #{@new_resource} #{@new_resource.version.inspect}"
+  puts "!!! --- CANDIDATE python_pip #{candidate_version.inspect}"
+  puts "!!! ^^^ CURRENT #{@current_resource} #{@current_resource.version.inspect}"
+
   # If it's not installed at all, install it
   if @current_resource.version == nil
     install_version = candidate_version
@@ -101,6 +105,7 @@ def current_installed_version
     delimeter = /==/
 
     version_check_cmd = "pip freeze#{expand_virtualenv(can_haz_virtualenv(@new_resource))} | grep -i #{@new_resource.package_name}=="
+    puts "!!! #{version_check_cmd}"
     # incase you upgrade pip with pip!
     if @new_resource.package_name.eql?('pip')
       delimeter = /\s/
