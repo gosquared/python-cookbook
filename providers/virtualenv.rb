@@ -33,7 +33,7 @@ action :create do
   end
 end
 
-action :delete do 
+action :delete do
   if exists?
     Chef::Log.info("Deleting virtualenv #{@new_resource} at #{@new_resource.path}")
     FileUtils.rm_rf(@new_resource.path)
@@ -44,7 +44,7 @@ end
 def load_current_resource
   @current_resource = Chef::Resource::PythonVirtualenv.new(@new_resource.name)
   @current_resource.path(@new_resource.path)
-  
+
   if exists?
     cstats = ::File.stat(@current_resource.path)
     @current_resource.owner(cstats.uid)

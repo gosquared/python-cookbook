@@ -24,3 +24,8 @@ attribute :package_name, :kind_of => String, :name_attribute => true
 attribute :version, :default => nil
 attribute :virtualenv, :kind_of => String
 attribute :options, :kind_of => String
+
+def initialize(*args)
+  super
+  @action = :install
+end
