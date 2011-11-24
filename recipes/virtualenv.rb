@@ -21,3 +21,20 @@
 include_recipe "python::pip"
 
 python_pip "virtualenv"
+
+# python_pip "virtualenvwrapper"
+# execute "Set up virtualenvwrapper" do
+#   command %{
+#     export WORKON_HOME=~/.virtualenvs
+#     mkdir -p $WORKON_HOME
+#     source #{node.python.basedir}/bin/virtualenvwrapper.sh
+
+#     if [ $(grep -c 'WORKON_HOME' ~/.bashrc) -eq 0 ]; then
+#       echo 'export WORKON_HOME=/.virtualenvs' >> ~/.bashrc
+#     fi
+
+#     if [ $(grep -c 'virtualenvwrapper' ~/.bashrc) -eq 0 ]; then
+#       echo 'source #{node.python.basedir}/bin/virtualenvwrapper.sh' >> ~/.bashrc
+#     fi
+#   }
+# end
