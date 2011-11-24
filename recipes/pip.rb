@@ -36,3 +36,5 @@ bash "install-pip" do
   EOF
   not_if "which pip"
 end
+
+python_pip "yolk"
