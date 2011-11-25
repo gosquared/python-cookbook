@@ -29,3 +29,26 @@ default[:python][:home]    = "#{python.basedir}/lib/python2.7"
 default[:python][:baseuri] = "http://www.python.org/ftp/python"
 
 default[:python][:configure_options] = "--prefix=#{python.basedir}"
+
+
+
+### uWSGI - Self-contained application container server
+# http://projects.unbit.it/uwsgi/
+#
+# path to uwsgi binary
+default[:python][:uwsgi][:bin] = '/usr/local/bin/uwsgi'
+#
+# log to file/udp
+default[:python][:uwsgi][:log] = '/var/log/uwsgi.log'
+
+# path (or name) of UNIX/TCP socket to bind to
+default[:python][:uwsgi][:socket] = '/tmp/uwsgi.sock'
+#
+# limit the address space of processes to MB megabytes
+default[:python][:uwsgi][:memory] = 512
+#
+# spawn <n> uwsgi worker processes
+default[:python][:uwsgi][:workers] = 4
+#
+# app specific options, like the chdir, python module to use etc.
+default[:python][:uwsgi][:app] = nil
