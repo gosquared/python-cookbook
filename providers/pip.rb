@@ -27,10 +27,6 @@ include Chef::Mixin::ShellOut
 # refactoring into core chef easy
 
 action :install do
-  puts "!!! vvv NEW #{@new_resource} #{@new_resource.version.inspect}"
-  puts "!!! --- CANDIDATE python_pip #{candidate_version.inspect}"
-  puts "!!! ^^^ CURRENT #{@current_resource} #{@current_resource.version.inspect}"
-
   # If it's not installed at all, install it
   if @current_resource.version == nil
     install_version = candidate_version
@@ -40,7 +36,7 @@ action :install do
   end
 
   if install_version
-    Chef::Log.info("Installing #{@new_resource} version #{install_version}")
+    Chef::Log.info("### Installing #{@new_resource} version #{install_version}")
     status = install_package(@new_resource.package_name, install_version)
     if status
       @new_resource.updated_by_last_action(true)
@@ -101,20 +97,15 @@ def load_current_resource
 end
 
 def current_installed_version
-  @current_installed_version ||= begin
-    delimeter = /==/
+  return @current_installed_version if @current_installed_version
 
-    version_check_cmd = "pip freeze#{expand_virtualenv(can_haz_virtualenv(@new_resource))} | grep -i #{@new_resource.package_name}=="
-    puts "!!! #{version_check_cmd}"
-    # incase you upgrade pip with pip!
-    if @new_resource.package_name.eql?('pip')
-      delimeter = /\s/
-      version_check_cmd = "pip --version"
-    end
-    p = shell_out!(version_check_cmd)
-    p.stdout.split(delimeter)[1].strip
-  rescue Chef::Exceptions::ShellCommandFailed
+  cmd = if new_resource.directory
+    %{echo $(ls #{new_resource.directory} | awk -F- '/#{new_resource.package_name}-/ {print $2}')}
+  else
+    %{echo $(yolk -l | awk 'BEGIN { FS = "- " }; /#{new_resource.package_name}/ {print $2}')}
   end
+
+  @current_installed_version = shell_out!(cmd).stdout.strip
 end
 
 def candidate_version
@@ -126,7 +117,7 @@ def candidate_version
   end
 end
 
-def install_package(name,version)
+def install_package(name, version)
   v = "==#{version}" unless version.eql?('latest')
   shell_out!("pip install#{expand_options(@new_resource.options)}#{expand_virtualenv(can_haz_virtualenv(@new_resource))} #{name}#{v}")
 end
