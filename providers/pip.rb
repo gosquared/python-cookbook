@@ -100,9 +100,9 @@ def current_installed_version
   return @current_installed_version if @current_installed_version
 
   cmd = if new_resource.directory
-    %{echo $(ls #{new_resource.directory} | awk -F- '/#{new_resource.package_name}-/ {print $2}')}
+    %{echo $(ls #{new_resource.directory} | awk -F"-" '/#{new_resource.package_name}-/ {print $2}')}
   else
-    %{echo $(yolk -l | awk 'BEGIN { FS = "- " }; /#{new_resource.package_name}/ {print $2}')}
+    %{echo $(yolk -l | awk -F"- " '/#{new_resource.package_name}/ {print $2}')}
   end
 
   @current_installed_version = shell_out!(cmd).stdout.strip
