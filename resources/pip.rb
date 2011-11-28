@@ -25,6 +25,7 @@ attribute :version,       :default => nil
 attribute :virtualenv,    :kind_of => String
 attribute :options,       :kind_of => String
 attribute :directory,     :kind_of => String
+attribute :binary,        :kind_of => String
 
 def initialize(*args)
   super

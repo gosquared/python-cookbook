@@ -28,7 +28,7 @@ include Chef::Mixin::ShellOut
 
 action :install do
   # If it's not installed at all, install it
-  if @current_resource.version == nil
+  if @current_resource.version == nil || @current_resource.version == ""
     install_version = candidate_version
   # If we specified a version, and it's not the current version, move to the specified version
   elsif @new_resource.version != @current_resource.version
@@ -36,7 +36,7 @@ action :install do
   end
 
   if install_version
-    Chef::Log.info("### Installing #{@new_resource} version #{install_version}")
+    Chef::Log.info("Installing #{@new_resource} version #{install_version}")
     status = install_package(@new_resource.package_name, install_version)
     if status
       @new_resource.updated_by_last_action(true)
@@ -101,6 +101,8 @@ def current_installed_version
 
   cmd = if new_resource.directory
     %{echo $(ls #{new_resource.directory} | awk -F"-" '/#{new_resource.package_name}-/ {print $2}')}
+  elsif new_resource.binary
+    %{echo $(#{new_resource.binary} | awk '{print $2}')}
   else
     %{echo $(yolk -l | awk -F"- " '/#{new_resource.package_name}/ {print $2}')}
   end

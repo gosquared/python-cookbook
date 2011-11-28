@@ -1,4 +1,6 @@
-python_pip "uWSGI"
+python_pip "uWSGI" do
+  binary "uwsgi --version"
+end
 
 user "uwsgi" do
   system true
