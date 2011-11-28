@@ -44,11 +44,30 @@ default[:python][:uwsgi][:log] = '/var/log/uwsgi.log'
 # path (or name) of UNIX/TCP socket to bind to
 default[:python][:uwsgi][:socket] = '/tmp/uwsgi.sock'
 #
+# write the masterpid to <file>
+default[:python][:uwsgi][:pidfile] = '/var/run/uwsgi.pid'
+#
+# setuid & setgid to <id/username> (only root)
+default[:python][:uwsgi][:uid] = 'uwsgi'
+default[:python][:uwsgi][:gid] = 'uwsgi'
+#
 # limit the address space of processes to MB megabytes
-default[:python][:uwsgi][:memory] = 512
+default[:python][:uwsgi][:memory] = 256
 #
 # spawn <n> uwsgi worker processes
-default[:python][:uwsgi][:workers] = 4
+default[:python][:uwsgi][:workers] = 2
 #
-# app specific options, like the chdir, python module to use etc.
+# app specific options, python module to use etc.
 default[:python][:uwsgi][:app] = nil
+
+# kill any process which takes longer than this many seconds to execute
+default[:python][:uwsgi][:harakiri] = 30
+#
+# chdir to <dir> before app loading
+default[:python][:uwsgi][:chdir] = ''
+#
+# name of python config module
+default[:python][:uwsgi][:module] = ''
+#
+# environment variables that need to be available to uwsgi init
+default[:python][:uwsgi][:envs] = []

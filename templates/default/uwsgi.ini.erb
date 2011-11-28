@@ -1,0 +1,14 @@
+[uwsgi]
+pidfile = <%= node.python.uwsgi.pidfile %>
+master = true
+no-orphans = true
+socket = <%= node.python.uwsgi.socket %>
+logto = <%= node.python.uwsgi.log %>
+workers = <%= node.python.uwsgi.workers %>
+limit-as = <%= node.python.uwsgi.memory %>
+harakiri = <%= node.python.uwsgi.harakiri %>
+uid = <%= node.python.uwsgi.uid %>
+gid = <%= node.python.uwsgi.gid %>
+chdir = <%= node.python.uwsgi.chdir %>
+module = <%= node.python.uwsgi.module %>
+die-on-term = true

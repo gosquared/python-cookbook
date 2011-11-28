@@ -23,3 +23,11 @@ template "/etc/init/uwsgi.conf" do
   notifies :restart, resources(:service => "uwsgi"), :delayed
   backup false
 end
+
+template "/etc/uwsgi.ini" do
+  cookbook "python"
+  source "uwsgi.ini.erb"
+  mode "0644"
+  notifies :restart, resources(:service => "uwsgi"), :delayed
+  backup false
+end
