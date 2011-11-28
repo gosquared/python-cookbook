@@ -15,6 +15,10 @@ env <%= variable %>='<%= value %>'
 
 exec <%= node.python.uwsgi.bin %> --ini /etc/uwsgi.ini
 
+post-start script
+  chmod 777 <%= node.python.uwsgi.socket %>
+end
+
 post-stop script
   rm <%= node.python.uwsgi.pidfile %>
   rm <%= node.python.uwsgi.socket %>
