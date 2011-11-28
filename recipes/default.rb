@@ -18,7 +18,10 @@
 # limitations under the License.
 #
 
-include_recipe "python::#{node['python']['install_method']}"
+# if you want a different python version:
+# http://askubuntu.com/questions/17841/will-python2-7-be-available-for-10-04-in-the-future
+include_recipe "python::package"
+
 include_recipe "python::pip"
 include_recipe "python::setuptools"
 include_recipe "python::virtualenv"

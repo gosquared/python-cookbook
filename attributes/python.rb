@@ -18,17 +18,8 @@
 # limitations under the License.
 #
 
-default[:python][:install_method] = 'package'
-
-default[:python][:version] = "2.7.2"
 default[:python][:basedir] = '/usr/local'
 default[:python][:src]     = "#{python.basedir}/src"
-default[:python][:dir]     = "Python-#{python.version}"
-default[:python][:checksum] = "5057eb067eb5b5a6040dbd0e889e06550bde9ec041dadaa855ee9490034cbdab"
-default[:python][:home]    = "#{python.basedir}/lib/python2.7"
-default[:python][:baseuri] = "http://www.python.org/ftp/python"
-
-default[:python][:configure_options] = "--prefix=#{python.basedir}"
 
 
 
