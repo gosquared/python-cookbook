@@ -16,10 +16,16 @@ env <%= variable %>='<%= value %>'
 exec <%= node.python.uwsgi.bin %> --ini /etc/uwsgi.ini
 
 post-start script
-  chmod 777 <%= node.python.uwsgi.socket %>
+  sleep 1 # giving the daemon a chance to create the socket file
+  chmod -f 777 <%= node.python.uwsgi.socket %>
 end
 
+killed script
+  rm -f <%= node.python.uwsgi.pidfile %>
+  rm -f <%= node.python.uwsgi.socket %>
+end script
+
 post-stop script
-  rm <%= node.python.uwsgi.pidfile %>
-  rm <%= node.python.uwsgi.socket %>
+  rm -f <%= node.python.uwsgi.pidfile %>
+  rm -f <%= node.python.uwsgi.socket %>
 end script
