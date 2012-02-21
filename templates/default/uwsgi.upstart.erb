@@ -18,7 +18,7 @@ exec <%= node.python.uwsgi.bin %> --ini /etc/uwsgi.ini
 post-start script
   sleep 1 # giving the daemon a chance to create the socket file
   chmod -f 777 <%= node.python.uwsgi.socket %>
-end
+end script
 
 killed script
   rm -f <%= node.python.uwsgi.pidfile %>
