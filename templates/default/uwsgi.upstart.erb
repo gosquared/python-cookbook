@@ -20,11 +20,6 @@ post-start script
   chmod -f 777 <%= node.python.uwsgi.socket %>
 end script
 
-killed script
-  rm -f <%= node.python.uwsgi.pidfile %>
-  rm -f <%= node.python.uwsgi.socket %>
-end script
-
 post-stop script
   rm -f <%= node.python.uwsgi.pidfile %>
   rm -f <%= node.python.uwsgi.socket %>
