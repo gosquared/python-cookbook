@@ -7,7 +7,7 @@ user "uwsgi" do
   shell '/bin/sh'
 end
 
-file node.python.uwsgi.log do
+file node[:python][:uwsgi][:log] do
   owner "uwsgi"
   group "uwsgi"
   mode "0644"
